@@ -1,0 +1,78 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/l2t-paper-color/l2t-paper-color.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./userData-config.html">
+
+
+<dom-module id="firechat-app">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+    </style>
+    <firebase-app auth-domain="firegame-5a621.firebaseapp.com" database-url="https://firegame-5a621.firebaseio.com" api-key="AIzaSyC63EGCsz-T4SsGONbpIg8G8TuLdUZLwPI"
+      storage-bucket="firegame-5a621.appspot.com" messaging-sender-id="329647471689" project-id="firegame-5a621">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" on-error="handleError">
+    </firebase-auth>
+    <firebase-document id="config" path="/users/{{user.uid}}/config" data="{{userData}}" log>
+    </firebase-document>
+    <firebase-document id="game" path="/game/data" data="{{gameData}}">
+    </firebase-document>
+    <div>[[selected]]</div>
+    <iron-pages selected="{{selected}}">
+      <userdata-config userdata="{{userData}}" pageno="{{selected}}"></userdata-config>
+      <div>
+        <h2>Hello [[user.uid]]!</h2>
+        <paper-input value="{{gameData.name}}"></paper-input>
+        <paper-button onClick="[[saveUser]]">Fertig</paper-button>
+      </div>
+      <div>Three</div>
+    </iron-pages>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class FireChatApp extends Polymer.Element {
+      static get is() { return 'firechat-app'; }
+      static get properties() {
+        return {
+          user: {
+            type: Object
+          },
+          selected: {
+            type: Number,
+            value: 0
+          },
+          userData: {
+            type: Object
+          },
+          gameData: {
+            type: Object
+          }
+        };
+      }
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.$.auth.signInAnonymously()
+        if (!this.gameData.users)
+          this.gameData.users = []
+        this.gameData.users.push(this.userData)
+        console.log(this.userData)
+      }
+
+    }
+
+    window.customElements.define(FireChatApp.is, FireChatApp);
+  </script>
+</dom-module>

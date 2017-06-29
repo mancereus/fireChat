@@ -1,0 +1,6 @@
+{
+  "name": "fireChat",
+  "short_name": "fireChat",
+  "start_url": "/",
+  "display": "standalone"
+}

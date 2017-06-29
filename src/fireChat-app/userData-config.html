@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/l2t-paper-color/l2t-paper-color.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+<dom-module id="userdata-config">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+
+      paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        }
+        ;
+      }
+
+      paper-button.indigo:hover {
+        background-color: var(--paper-indigo-400);
+      }
+    </style>
+    <div>
+      <h3>Spiel Chat</h3>
+      <paper-input placeholder="Short Name" label="Name" maxLength=5 value="{{userdata.name}}"></paper-input>
+      <l2t-paper-color label="Farbe" value="{{userdata.color}}" hideAdvanced colors="[[colors]]"></l2t-paper-color>
+      <paper-button raised class="indigo" on-tap="saveData">Fertig</paper-button>[[pageno]]
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class UserDataConfig extends Polymer.Element {
+      static get is() { return 'userdata-config'; }
+      static get properties() {
+        return {
+          pageno: {
+            type: Number,
+            notify: true
+          },
+          userdata: {
+            type: Object,
+            notify: true
+          },
+          colors: {
+            type: Array,
+            value: ["#ff0000", "#ffff00", "#00ff00", "#0000ff"]
+          }
+        };
+      }
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      saveData() {
+        console.log("click")
+        this.pageno = 1
+      }
+    }
+
+    window.customElements.define(UserDataConfig.is, UserDataConfig);
+  </script>
+</dom-module>
