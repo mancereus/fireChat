@@ -7,7 +7,8 @@
     "paper-input": "PolymerElements/paper-input#^2.0.1",
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
     "l2t-paper-color": "Link2Twenty/l2t-paper-color#^0.1.1",
-    "paper-button": "PolymerElements/paper-button#^2.0.0"
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "app-layout": "PolymerElements/app-layout#^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

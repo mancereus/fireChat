@@ -1,10 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../../bower_components/l2t-paper-color/l2t-paper-color.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 
-<dom-module id="userdata-config">
+<dom-module id="game-round">
   <template>
     <style>
        :host {
@@ -26,10 +27,16 @@
       }
     </style>
     <div>
-      <h3>Spiel Chat</h3>
-      <paper-input placeholder="Short Name" label="Name" maxLength=5 value="{{user.name}}"></paper-input>
-      <l2t-paper-color label="Farbe" value="{{user.color}}" hideAdvanced colors="[[colors]]"></l2t-paper-color>
-      <paper-button raised class="indigo" on-tap="saveData">Fertig</paper-button>
+      <h3>Spiel</h3>
+      <firebase-query id="query" app-name="game" path="/user" data="{{users}}" log>
+      </firebase-query>
+
+      <template is="dom-repeat" items="{{users}}" as="user">
+        test
+        <div>[[user.config.name]]</div>
+      </template>
+
+      <paper-button raised class="indigo" on-tap="saveData">Fertig</paper-button>[[pageno]]
     </div>
   </template>
 
@@ -38,8 +45,8 @@
      * @customElement
      * @polymer
      */
-    class UserDataConfig extends Polymer.Element {
-      static get is() { return 'userdata-config'; }
+    class GameRound extends Polymer.Element {
+      static get is() { return 'game-round'; }
       static get properties() {
         return {
           pageno: {
@@ -50,11 +57,11 @@
             type: Object,
             notify: true
           },
-          colors: {
-            type: Array,
-            value: ["#ff0000", "#ffff00", "#00ff00", "#0000ff"]
+          game: {
+            type: Object,
+            notify: true
           }
-        };
+        }
       }
       connectedCallback() {
         super.connectedCallback();
@@ -66,6 +73,6 @@
       }
     }
 
-    window.customElements.define(UserDataConfig.is, UserDataConfig);
+    window.customElements.define(GameRound.is, GameRound);
   </script>
 </dom-module>
